@@ -40,7 +40,7 @@ header.nav.solid, header.nav.scrolled{background:rgba(6,27,51,0.92); backdrop-fi
 .nav-toggle span{display:block; width:24px; height:2px; background:#fff; margin:5px 0; transition:.3s;}
 
 /* generic page hero (inner pages) */
-.page-hero{position:relative; background:linear-gradient(120% 100% at 75% 10%, #0A2C52, #061B33 60%, #030F1F); color:#fff; padding:150px 0 70px;}
+.page-hero{position:relative; background:radial-gradient(120% 100% at 75% 10%, #0A2C52, #061B33 60%, #030F1F); color:#fff; padding:150px 0 70px;}
 .page-hero .eyebrow{color:var(--gold-bright);}
 .page-hero h1{font-size:clamp(34px,4.6vw,54px); font-weight:800; margin-top:14px;}
 .page-hero p{font-size:17px; color:rgba(255,255,255,0.72); margin-top:16px; max-width:620px;}
