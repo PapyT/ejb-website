@@ -45,15 +45,15 @@
     <div class="map-panel">
   <div class="map-frame reveal">
     <div class="map-head"><span class="t">Live network &middot; Nigeria &amp; beyond</span><span class="live"><span class="pulse-dot"></span> 17 cities</span></div>
-    <svg id="nigeria-map" viewBox="0 0 580 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="E.J.B delivery network across Nigeria and international routes">
+    <svg id="nigeria-map" viewBox="0 0 1199 971" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="E.J.B delivery network across Nigeria and international routes">
       <defs>
         <linearGradient id="ngfill" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stop-color="#0F3D6E" stop-opacity="0.28"/>
           <stop offset="1" stop-color="#061B33" stop-opacity="0.5"/>
         </linearGradient>
-        <clipPath id="ngclip"><path d="M70,136 L102,94 L120,80 L163,94 L203,76 L253,85 L281,92 L324,96 L353,83 L418,92 L459,69 L498,94 L496,121 L464,128 L482,154 L450,182 L423,218 L446,272 L407,316 L353,328 L281,400 Q228,412 181,400 Q150,392 124,337 L72,334 L70,240 Z"/></clipPath>
+        <clipPath id="ngclip"><path id="ngclip-path" d="M300,10 L600,70 L1130,50 L1195,210 L1050,470 L965,560 L820,760 L620,900 L450,960 L300,950 L260,850 L60,690 L20,500 L120,160 Z"/></clipPath>
       </defs>
-      <path d="M70,136 L102,94 L120,80 L163,94 L203,76 L253,85 L281,92 L324,96 L353,83 L418,92 L459,69 L498,94 L496,121 L464,128 L482,154 L450,182 L423,218 L446,272 L407,316 L353,328 L281,400 Q228,412 181,400 Q150,392 124,337 L72,334 L70,240 Z" fill="url(#ngfill)" stroke="rgba(224,178,60,0.45)" stroke-width="1.4"/>
+      <path id="ng-border" d="M300,10 L600,70 L1130,50 L1195,210 L1050,470 L965,560 L820,760 L620,900 L450,960 L300,950 L260,850 L60,690 L20,500 L120,160 Z" fill="url(#ngfill)" stroke="rgba(224,178,60,0.45)" stroke-width="4"/>
       <g id="intl-routes"></g>
       <g id="dom-routes" clip-path="url(#ngclip)"></g>
       <g id="intl-dots"></g>
@@ -172,25 +172,47 @@ links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.clas
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
-<script>
-(function(){
+<script>(function(){
   var NS='http://www.w3.org/2000/svg';
+  var VBW=1199, VBH=971;
   var map=document.getElementById('nigeria-map');
   if(!map) return;
 
+  // Load the traced Nigeria border and apply it to the outline + clip path.
+  fetch('./nigeria-border.json')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(!data||!data.points||!data.points.length) return;
+      var iw=data.image_width||VBW, ih=data.image_height||VBH;
+      var sx=VBW/iw, sy=VBH/ih;
+      var d='M'+data.points.map(function(p){return (p.x*sx).toFixed(1)+','+(p.y*sy).toFixed(1);}).join(' L')+' Z';
+      document.getElementById('ng-border').setAttribute('d',d);
+      document.getElementById('ngclip-path').setAttribute('d',d);
+    })
+    .catch(function(){ /* keep inline fallback outline */ });
+
+  // City positions (viewBox 1199x971), projected from real lon/lat.
   var cities={
-    Lagos:{x:95,y:332,hub:true}, Ibadan:{x:113,y:298,hub:true}, Abeokuta:{x:93,y:307},
-    Osun:{x:137,y:284}, Akure:{x:160,y:303}, "Ado-Ekiti":{x:160,y:290},
-    Benin:{x:175,y:336}, Warri:{x:179,y:365}, Onitsha:{x:217,y:343,hub:true},
-    Enugu:{x:242,y:332}, Aba:{x:237,y:380}, "Port Harcourt":{x:225,y:390,hub:true},
-    Uyo:{x:257,y:383}, Abuja:{x:242,y:238,hub:true}, Kaduna:{x:240,y:185},
-    Jos:{x:292,y:208}, Gombe:{x:373,y:194}
+    Lagos:{x:71,y:751,hub:true}, Ibadan:{x:121,y:657,hub:true}, Abeokuta:{x:66,y:680},
+    Osun:{x:187,y:618}, Akure:{x:250,y:670}, "Ado-Ekiti":{x:253,y:633},
+    Benin:{x:293,y:762}, Warri:{x:306,y:845}, Onitsha:{x:410,y:782,hub:true},
+    Enugu:{x:482,y:744}, Aba:{x:467,y:885}, "Port Harcourt":{x:434,y:915,hub:true},
+    Uyo:{x:524,y:893}, Abuja:{x:480,y:487,hub:true}, Kaduna:{x:475,y:340},
+    Jos:{x:617,y:403}, Gombe:{x:848,y:363}
   };
 
-  // Generic outward points, just outside the border (no labels)
-  var intl=[{x:38,y:52},{x:24,y:210},{x:60,y:448},{x:548,y:442},{x:560,y:232},{x:546,y:66}];
+  // External nodes = world regions, just outside the border, each labelled.
+  // anchor controls label side: 'start' = label to the right, 'end' = to the left.
+  var intl=[
+    {name:"West Africa", x:60,  y:540, anchor:"start"},
+    {name:"Europe",      x:150, y:70,  anchor:"start"},
+    {name:"Americas",    x:170, y:930, anchor:"start"},
+    {name:"Middle East", x:1150,y:470, anchor:"end"},
+    {name:"Asia",        x:1120,y:90,  anchor:"end"},
+    {name:"C. & E. Africa", x:1120,y:920, anchor:"end"}
+  ];
 
-  // Multiple origins, not only Lagos
+  // Multiple origins, not only Lagos.
   var domestic=[
     ["Lagos","Ibadan"],["Ibadan","Osun"],["Osun","Akure"],["Akure","Ado-Ekiti"],
     ["Lagos","Benin"],["Benin","Warri"],["Benin","Onitsha"],["Onitsha","Enugu"],
@@ -199,7 +221,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     ["Abuja","Jos"],["Jos","Gombe"],["Abuja","Onitsha"],["Abuja","Enugu"]
   ];
 
-  // Lagos and Abuja out to the world and back
+  // Lagos serves West Africa, Europe, Americas; Abuja serves Middle East, Asia, C. & E. Africa.
   var international=[["Lagos",0],["Lagos",1],["Lagos",2],["Abuja",3],["Abuja",4],["Abuja",5]];
 
   function curve(x1,y1,x2,y2,k){
@@ -228,8 +250,12 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   var idG=document.getElementById('intl-dots');
   intl.forEach(function(pt){
     var g=el('g',{'class':'intl-dot'});
-    g.appendChild(el('circle',{cx:pt.x,cy:pt.y,r:4.5,'class':'ring'}));
-    g.appendChild(el('circle',{cx:pt.x,cy:pt.y,r:1.8,'class':'core'}));
+    g.appendChild(el('circle',{cx:pt.x,cy:pt.y,r:9,'class':'ring'}));
+    g.appendChild(el('circle',{cx:pt.x,cy:pt.y,r:4,'class':'core'}));
+    var anchor=pt.anchor||'start';
+    var lx=anchor==='end'?pt.x-14:pt.x+14;
+    var t=el('text',{x:lx,y:pt.y+5,'class':'intl-label','text-anchor':anchor});
+    t.textContent=pt.name; g.appendChild(t);
     idG.appendChild(g);
   });
 
@@ -238,13 +264,13 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     var c=cities[name];
     var g=el('g',{'class':'city-dot'+(c.hub?' hub-dot':'')});
     if(c.hub){
-      var ring=el('circle',{cx:c.x,cy:c.y,r:9,'class':'ring'});
-      ring.appendChild(el('animate',{attributeName:'r',values:'5;11;5',dur:'3s',repeatCount:'indefinite'}));
+      var ring=el('circle',{cx:c.x,cy:c.y,r:18,'class':'ring'});
+      ring.appendChild(el('animate',{attributeName:'r',values:'10;22;10',dur:'3s',repeatCount:'indefinite'}));
       ring.appendChild(el('animate',{attributeName:'opacity',values:'0.5;0;0.5',dur:'3s',repeatCount:'indefinite'}));
       g.appendChild(ring);
     }
-    g.appendChild(el('circle',{cx:c.x,cy:c.y,r:c.hub?4.2:2.8,'class':'core'}));
-    var t=el('text',{x:c.x+6,y:c.y+3,'class':'city-label'+(c.hub?' hub-label':'')});
+    g.appendChild(el('circle',{cx:c.x,cy:c.y,r:c.hub?9:5.5,'class':'core'}));
+    var t=el('text',{x:c.x+13,y:c.y+6,'class':'city-label'+(c.hub?' hub-label':'')});
     t.textContent=name; g.appendChild(t);
     cdG.appendChild(g);
   });
@@ -256,7 +282,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     var item=routeEls[ri%routeEls.length], r=item.el;
     r.classList.add('active');
     var len=r.getTotalLength();
-    var plane=el('circle',{r:2.4,'class':'plane-dot'});
+    var plane=el('circle',{r:5,'class':'plane-dot'});
     r.parentNode.appendChild(plane);
     var start=null, dur=item.back?2200:1500;
     function step(ts){
@@ -271,4 +297,4 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   }
   setTimeout(flyNext,900);
 })();
-</script></body></html>
+</script>

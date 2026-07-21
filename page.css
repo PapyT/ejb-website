@@ -26,19 +26,19 @@
 .map-head .live{display:flex; align-items:center; gap:7px; font-family:'JetBrains Mono'; font-size:11px; color:var(--gold-bright);}
 #nigeria-map{width:100%; height:auto; display:block;}
 .city-dot circle.core{fill:var(--gold-bright);}
-.city-dot circle.ring{fill:none; stroke:var(--gold-bright); stroke-width:1.2;}
-.city-label{font-family:'JetBrains Mono'; font-size:8.5px; fill:rgba(255,255,255,0.8); font-weight:500; pointer-events:none;}
+.city-dot circle.ring{fill:none; stroke:var(--gold-bright); stroke-width:2.4;}
+.city-label{font-family:'JetBrains Mono'; font-size:17px; fill:rgba(255,255,255,0.8); font-weight:500; pointer-events:none;}
 .hub-dot circle.core{fill:#fff;}
-.hub-label{fill:#fff; font-weight:700; font-size:9px;}
-.route{fill:none; stroke:rgba(224,178,60,0.3); stroke-width:1; stroke-dasharray:3 4;}
-.route.active{stroke:var(--gold-bright); stroke-width:1.5; opacity:0.9;}
+.hub-label{fill:#fff; font-weight:700; font-size:19px;}
+.route{fill:none; stroke:rgba(224,178,60,0.3); stroke-width:2; stroke-dasharray:6 8;}
+.route.active{stroke:var(--gold-bright); stroke-width:3; opacity:0.9;}
 .plane-dot{fill:var(--gold-bright);}
 
 /* International markers & routes */
 .intl-dot circle.core{fill:var(--gold-bright);}
-.intl-dot circle.ring{fill:none; stroke:rgba(224,178,60,0.5); stroke-width:1;}
-.route.intl{stroke-dasharray:2 5; stroke:rgba(224,178,60,0.28);}
-.route.intl.active{stroke:var(--gold-bright); stroke-width:1.4; opacity:0.85;}
+.intl-dot circle.ring{fill:none; stroke:rgba(224,178,60,0.5); stroke-width:1.6;}
+.route.intl{stroke-dasharray:4 10; stroke:rgba(224,178,60,0.28);}
+.route.intl.active{stroke:var(--gold-bright); stroke-width:2.8; opacity:0.85;}
 
 /* SERVICES grid */
 .svc-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
