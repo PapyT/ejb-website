@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - E.J.B Network Venture</title><meta name="description" content="Contact E.J.B Network Venture for pricing, delivery timelines and customized logistics solutions. Call, email or request a shipment online.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="page.css"><link rel="icon" type="image/png" href="img/logo-dark.png"></head><body>
+<header class="nav solid" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo-light.png" alt="E.J.B Network Venture">
+      <span class="nm">E.J.B Network Venture<small>INTEGRITY IS OUR WATCHWORD</small></span>
+    </a>
+    <nav class="nav-links" id="navlinks">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="contact.html" class="nav-cta">Book a shipment</a>
+    </nav>
+    <button class="nav-toggle" id="navtoggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<section class="page-hero"><div class="wrap reveal">
+  <div class="crumbs"><a href="index.html">Home</a> / Contact</div>
+  <span class="eyebrow">Get started</span>
+  <h1>Let's move your cargo with confidence</h1>
+  <p>Whether you are shipping across town or across Nigeria, our logistics specialists are ready to help. Contact us for pricing, delivery timelines and customized logistics solutions tailored to your needs.</p>
+</div></section>
+<section><div class="wrap"><div class="contact-wrap">
+  <div class="contact-info reveal">
+    <span class="eyebrow">Reach us</span>
+    <h2>Talk to our team</h2>
+    <p>Call or message us directly, or send a request using the form and we will get back to you with a rate and next steps.</p>
+    <div class="contact-methods">
+      <div class="cm"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.7 2.6a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.5-1.2a2 2 0 012.1-.4c.8.3 1.7.6 2.6.7a2 2 0 011.7 2z"/></svg></div><div><div class="cl">Call or WhatsApp</div><div class="cv">0805 059 0665</div><div class="cv">0806 811 0696</div></div></div>
+      <div class="cm"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></div><div><div class="cl">Email</div><div class="cv">ejb_net@yahoo.com</div></div></div>
+      <div class="cm"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="cl">Head office</div><div class="cv">GAT Terminal II, Dacca Shed Cargo Village,<br>M.M.A. Lagos &middot; or MMA2, Cargo Shed</div></div></div>
+    </div>
+  </div>
+  <div class="form-card reveal">
+    <h3>Request a shipment</h3>
+    <p class="sub">No account needed. We will reply with a rate and next steps.</p>
+    <form onsubmit="return submitLead(event)">
+      <div class="field-row">
+        <div class="field"><label>Your name</label><input required name="name" placeholder="Full name"></div>
+        <div class="field"><label>Phone</label><input required name="phone" placeholder="0803 000 0000"></div>
+      </div>
+      <div class="field"><label>Email <span style="color:#8492A6;font-weight:400">(optional)</span></label><input type="email" name="email" placeholder="you@example.com"></div>
+      <div class="field-row">
+        <div class="field"><label>From</label><select name="origin" required><option value="">Origin</option><option>Lagos</option><option>Abuja</option><option>Ibadan</option><option>Onitsha</option><option>Port Harcourt</option><option>Enugu</option><option>Kaduna</option><option>Benin</option><option>Warri</option><option>Abeokuta</option><option>Akure</option><option>Osun</option><option>Gombe</option><option>Ado-Ekiti</option><option>Aba</option><option>Uyo</option><option>Jos</option><option>Other / International</option></select></div>
+        <div class="field"><label>To</label><select name="destination" required><option value="">Destination</option><option>Lagos</option><option>Abuja</option><option>Ibadan</option><option>Onitsha</option><option>Port Harcourt</option><option>Enugu</option><option>Kaduna</option><option>Benin</option><option>Warri</option><option>Abeokuta</option><option>Akure</option><option>Osun</option><option>Gombe</option><option>Ado-Ekiti</option><option>Aba</option><option>Uyo</option><option>Jos</option><option>Other / International</option></select></div>
+      </div>
+      <div class="field"><label>What are you sending?</label><textarea name="goods" rows="3" placeholder="e.g. 2 inverters and a carton of accessories"></textarea></div>
+      <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center">Send request</button>
+      <p class="form-note">By sending, you agree to be contacted about your shipment.</p>
+    </form>
+  </div>
+</div></div></section>
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="img/logo-light.png" alt="E.J.B Network Venture">
+        <p>Nigerian logistics built on named accountability. Domestic network, air and sea freight, and customs clearing, all under one trusted operation.</p>
+      </div>
+      <div class="foot-col"><h5>Company</h5>
+        <a href="index.html">Home</a><a href="about.html">About us</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div>
+      <div class="foot-col"><h5>Services</h5>
+        <a href="services.html">Cargo transport</a><a href="services.html">Air &amp; sea freight</a><a href="services.html">Customs clearing</a><a href="services.html">Corporate logistics</a></div>
+      <div class="foot-col"><h5>Contact</h5>
+        <span class="fi">0805 059 0665</span><span class="fi">0806 811 0696</span><span class="fi">ejb_net@yahoo.com</span><span class="fi">M.M.A. Lagos, Nigeria</span></div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 E.J.B Network Venture. All rights reserved.</span>
+      <span class="tag">INTEGRITY IS OUR WATCHWORD</span>
+    </div>
+  </div>
+</footer>
+<script>
+const nav=document.getElementById('nav');
+const solid=nav.classList.contains('solid');
+if(!solid){addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>30);},{passive:true});}
+const tog=document.getElementById('navtoggle'), links=document.getElementById('navlinks');
+tog.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script>
+function submitLead(e){
+  e.preventDefault();
+  const f=e.target; const btn=f.querySelector('button[type=submit]');
+  btn.textContent='Sending...'; btn.disabled=true;
+  setTimeout(()=>{ f.innerHTML='<div style="text-align:center;padding:24px 0"><div style="width:58px;height:58px;border-radius:50%;background:#E7F5EC;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><h3 style="color:#061B33">Request received</h3><p style="color:#5A6880;margin-top:8px">Thank you. Our team will reach out shortly with a rate and next steps.</p></div>'; },800);
+  return false;
+}
+</script></body></html>
