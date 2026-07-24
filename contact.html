@@ -39,7 +39,9 @@
   <div class="form-card reveal">
     <h3>Request a shipment</h3>
     <p class="sub">No account needed. We will reply with a rate and next steps.</p>
-    <form onsubmit="return submitLead(event)">
+    <form name="shipment-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onsubmit="return submitLead(event)">
+      <input type="hidden" name="form-name" value="shipment-request">
+      <p class="hp-field"><label>Do not fill this in: <input name="bot-field"></label></p>
       <div class="field-row">
         <div class="field"><label>Your name</label><input required name="name" placeholder="Full name"></div>
         <div class="field"><label>Phone</label><input required name="phone" placeholder="0803 000 0000"></div>
@@ -86,11 +88,34 @@ const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.t
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
 <script>
+/* Sends the form to Netlify Forms, then shows the in-place success card.
+   Netlify captures the submission at the site root; no backend needed. */
 function submitLead(e){
   e.preventDefault();
-  const f=e.target; const btn=f.querySelector('button[type=submit]');
+  var f=e.target;
+  var btn=f.querySelector('button[type=submit]');
+  var prev=btn.textContent;
+  var old=f.querySelector('.form-error'); if(old) old.remove();
+
   btn.textContent='Sending...'; btn.disabled=true;
-  setTimeout(()=>{ f.innerHTML='<div style="text-align:center;padding:24px 0"><div style="width:58px;height:58px;border-radius:50%;background:#E7F5EC;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><h3 style="color:#061B33">Request received</h3><p style="color:#5A6880;margin-top:8px">Thank you. Our team will reach out shortly with a rate and next steps.</p></div>'; },800);
+
+  var data=new FormData(f);
+  fetch('/',{
+    method:'POST',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:new URLSearchParams(data).toString()
+  })
+  .then(function(res){
+    if(!res.ok) throw new Error('Submission failed');
+    f.innerHTML='<div style="text-align:center;padding:24px 0"><div style="width:58px;height:58px;border-radius:50%;background:#E7F5EC;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><h3 style="color:#061B33">Request received</h3><p style="color:#5A6880;margin-top:8px">Thank you. Our team will reach out shortly with a rate and next steps.</p></div>';
+  })
+  .catch(function(){
+    var err=document.createElement('div');
+    err.className='form-error';
+    err.innerHTML='Sorry, that did not send. Please call <strong>0805 059 0665</strong> or email <strong>ejb_net@yahoo.com</strong> and we will help right away.';
+    f.insertBefore(err, f.firstChild);
+    btn.textContent=prev; btn.disabled=false;
+  });
   return false;
 }
 </script></body></html>

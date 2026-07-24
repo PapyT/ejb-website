@@ -25,6 +25,18 @@
 .track-head .t{font-family:'JetBrains Mono'; font-size:11px; letter-spacing:0.1em; color:rgba(255,255,255,0.6); text-transform:uppercase;}
 .track-head .live{display:flex; align-items:center; gap:7px; font-family:'JetBrains Mono'; font-size:11px; color:var(--gold-bright);}
 
+/* fade the card contents while a new consignment swaps in */
+.track-card .track-id,
+.track-card .track-route,
+.track-card .track-steps,
+.track-card .track-foot,
+.track-card .track-head .live{transition:opacity .4s ease, transform .4s ease;}
+.track-card.swapping .track-id,
+.track-card.swapping .track-route,
+.track-card.swapping .track-steps,
+.track-card.swapping .track-foot,
+.track-card.swapping .track-head .live{opacity:0; transform:translateY(6px);}
+
 .track-id{display:flex; align-items:baseline; justify-content:space-between; gap:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:13px 16px; margin-bottom:22px;}
 .track-id .lbl{font-family:'JetBrains Mono'; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.55);}
 .track-id .val{font-family:'JetBrains Mono'; font-weight:700; font-size:16px; color:#fff; letter-spacing:0.02em;}
@@ -43,10 +55,10 @@
 .tstep{display:flex; gap:13px; align-items:flex-start; padding:11px 0; position:relative;}
 .tstep:not(:last-child)::after{content:''; position:absolute; left:15px; top:34px; bottom:-2px; width:2px; background:rgba(255,255,255,0.1);}
 .tstep.done:not(:last-child)::after{background:rgba(224,178,60,0.5);}
-.tstep .ic{flex-shrink:0; width:32px; height:32px; border-radius:9px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); z-index:1;}
-.tstep .ic svg{width:16px; height:16px; stroke:rgba(255,255,255,0.5);}
-.tstep h5{font-family:'Sora'; font-size:14px; color:rgba(255,255,255,0.55); margin-bottom:1px;}
-.tstep p{font-size:12px; color:rgba(255,255,255,0.4); margin:0;}
+.tstep .ic{flex-shrink:0; width:32px; height:32px; border-radius:9px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); z-index:1; transition:background .3s, border-color .3s;}
+.tstep .ic svg{width:16px; height:16px; stroke:rgba(255,255,255,0.5); transition:stroke .3s;}
+.tstep h5{font-family:'Sora'; font-size:14px; color:rgba(255,255,255,0.55); margin-bottom:1px; transition:color .3s;}
+.tstep p{font-size:12px; color:rgba(255,255,255,0.4); margin:0; transition:color .3s;}
 .tstep.done .ic{background:rgba(224,178,60,0.16); border-color:rgba(224,178,60,0.4);}
 .tstep.done .ic svg{stroke:var(--gold-bright);}
 .tstep.done h5{color:rgba(255,255,255,0.82);}
@@ -150,6 +162,9 @@
 .field input:focus,.field select:focus,.field textarea:focus{outline:none; border-color:var(--navy-600); box-shadow:0 0 0 3px rgba(22,80,142,0.1);}
 .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
 .form-note{font-size:12.5px; color:#8492A6; margin-top:14px; text-align:center;}
+.form-error{background:#FBEAE7; color:#B0382A; border-radius:10px; padding:11px 14px; font-size:13.5px; margin-bottom:16px;}
+/* honeypot: hidden from people, visible to bots */
+.hp-field{position:absolute; left:-9999px; opacity:0; height:0; overflow:hidden;}
 
 /* CTA band */
 .cta-band{background:linear-gradient(120deg,var(--navy-700),var(--navy-900)); color:#fff; border-radius:22px; padding:52px; text-align:center; position:relative; overflow:hidden;}

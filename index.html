@@ -43,35 +43,35 @@
       </div>
     </div>
     <div class="track-panel">
-      <div class="track-card reveal">
+      <div class="track-card reveal" id="trackcard">
         <div class="track-head">
           <span class="t">Live shipment &middot; tracking</span>
-          <span class="live"><span class="pulse-dot"></span> In transit</span>
+          <span class="live"><span class="pulse-dot"></span> <span id="tk-status">In transit</span></span>
         </div>
         <div class="track-id">
           <span class="lbl">Consignment</span>
-          <span class="val">EJB-LG-4827-ON</span>
+          <span class="val" id="tk-id">EJB-LG-4827-ON</span>
         </div>
         <div class="track-route">
           <div class="node">
-            <span class="code">LG</span>
-            <span class="city">Lagos</span>
+            <span class="code" id="tk-ocode">LG</span>
+            <span class="city" id="tk-ocity">Lagos</span>
           </div>
           <div class="track-line"><span class="dot"></span></div>
           <div class="node">
-            <span class="code">ON</span>
-            <span class="city">Onitsha</span>
+            <span class="code" id="tk-dcode">ON</span>
+            <span class="city" id="tk-dcity">Onitsha</span>
           </div>
         </div>
-        <div class="track-steps">
-          <div class="tstep done"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><h5>Collected</h5><p>Received &amp; coded at Lagos hub</p></div></div>
-          <div class="tstep active"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="5" width="15" height="12" rx="1.5"/><path d="M16 8h4l3 3v6h-7M5.5 20a2 2 0 100-4 2 2 0 000 4zM18.5 20a2 2 0 100-4 2 2 0 000 4z"/></svg></span><div><h5>In transit</h5><p>Moving through the network</p></div></div>
-          <div class="tstep"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span><div><h5>Out for delivery</h5><p>Assigned to a named receiver</p></div></div>
-          <div class="tstep"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span><div><h5>Delivered</h5><p>Signed &amp; confirmed on arrival</p></div></div>
+        <div class="track-steps" id="tk-steps">
+          <div class="tstep done" data-step="0"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><h5>Collected</h5><p id="tk-collect">Received &amp; coded at Lagos hub</p></div></div>
+          <div class="tstep active" data-step="1"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="5" width="15" height="12" rx="1.5"/><path d="M16 8h4l3 3v6h-7M5.5 20a2 2 0 100-4 2 2 0 000 4zM18.5 20a2 2 0 100-4 2 2 0 000 4z"/></svg></span><div><h5>In transit</h5><p>Moving through the network</p></div></div>
+          <div class="tstep" data-step="2"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span><div><h5>Out for delivery</h5><p>Assigned to a named receiver</p></div></div>
+          <div class="tstep" data-step="3"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span><div><h5>Delivered</h5><p>Signed &amp; confirmed on arrival</p></div></div>
         </div>
         <div class="track-foot">
           <span class="pill"><span class="pulse-dot"></span> QR &amp; receipt verified</span>
-          <span class="eta">ETA today</span>
+          <span class="eta" id="tk-eta">ETA today</span>
         </div>
       </div>
     </div>
@@ -186,4 +186,45 @@ tog.addEventListener('click',()=>links.classList.toggle('open'));
 links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ===== Hero tracking card: cycle through sample consignments =====
+   Illustrative only. Rotates route, code and progress so the hero feels
+   like a live operation rather than one frozen shipment. */
+(function(){
+  var card=document.getElementById('trackcard');
+  if(!card) return;
+  var SHIPMENTS=[
+    {o:'Lagos',oc:'LG',d:'Onitsha',dc:'ON',id:'EJB-LG-4827-ON',step:1,status:'In transit',eta:'ETA today'},
+    {o:'Abuja',oc:'AB',d:'Port Harcourt',dc:'PH',id:'EJB-AB-5193-PH',step:2,status:'Out for delivery',eta:'ETA today'},
+    {o:'Ibadan',oc:'IB',d:'Kaduna',dc:'KA',id:'EJB-IB-3364-KA',step:1,status:'In transit',eta:'ETA tomorrow'},
+    {o:'Lagos',oc:'LG',d:'Uyo',dc:'UY',id:'EJB-LG-6021-UY',step:3,status:'Delivered',eta:'Delivered'},
+    {o:'Onitsha',oc:'ON',d:'Abuja',dc:'AB',id:'EJB-ON-4478-AB',step:0,status:'Collected',eta:'ETA in 2 days'},
+    {o:'Port Harcourt',oc:'PH',d:'Lagos',dc:'LG',id:'EJB-PH-7710-LG',step:2,status:'Out for delivery',eta:'ETA today'}
+  ];
+  var i=0;
+  var $=function(id){return document.getElementById(id);};
+  function render(s){
+    $('tk-id').textContent=s.id;
+    $('tk-ocode').textContent=s.oc; $('tk-ocity').textContent=s.o;
+    $('tk-dcode').textContent=s.dc; $('tk-dcity').textContent=s.d;
+    $('tk-status').textContent=s.status;
+    $('tk-eta').textContent=s.eta;
+    $('tk-collect').innerHTML='Received &amp; coded at '+s.o+' hub';
+    var steps=card.querySelectorAll('.tstep');
+    for(var n=0;n<steps.length;n++){
+      steps[n].classList.remove('done','active');
+      if(n<s.step) steps[n].classList.add('done');
+      else if(n===s.step) steps[n].classList.add('active');
+    }
+    // completed shipments show every step as done
+    if(s.step===steps.length-1){ steps[steps.length-1].classList.remove('active'); steps[steps.length-1].classList.add('done','active'); }
+  }
+  render(SHIPMENTS[0]);
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  setInterval(function(){
+    i=(i+1)%SHIPMENTS.length;
+    card.classList.add('swapping');
+    setTimeout(function(){ render(SHIPMENTS[i]); card.classList.remove('swapping'); },420);
+  },5200);
+})();
 </script></body></html>
