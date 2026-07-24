@@ -31,20 +31,19 @@
     <h2>Talk to our team</h2>
     <p>Call or message us directly, or send a request using the form and we will get back to you with a rate and next steps.</p>
     <div class="contact-methods">
-      <div class="cm"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.7 2.6a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.5-1.2a2 2 0 012.1-.4c.8.3 1.7.6 2.6.7a2 2 0 011.7 2z"/></svg></div><div><div class="cl">Call or WhatsApp</div><div class="cv">0805 059 0665</div><div class="cv">0806 811 0696</div></div></div>
-      <div class="cm"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></div><div><div class="cl">Email</div><div class="cv">ejb_net@yahoo.com</div></div></div>
+      <div class="cm"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.7 2.6a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.5-1.2a2 2 0 012.1-.4c.8.3 1.7.6 2.6.7a2 2 0 011.7 2z"/></svg></div><div><div class="cl">Call or WhatsApp</div><div class="cv">+234 805 059 0665</div><div class="cv">+234 806 811 0696</div></div></div>
+      <div class="cm"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></div><div><div class="cl">Email</div><div class="cv">seguntosin01@gmail.com</div></div></div>
       <div class="cm"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="cl">Head office</div><div class="cv">GAT Terminal II, Dacca Shed Cargo Village,<br>M.M.A. Lagos &middot; or MMA2, Cargo Shed</div></div></div>
     </div>
   </div>
   <div class="form-card reveal">
     <h3>Request a shipment</h3>
     <p class="sub">No account needed. We will reply with a rate and next steps.</p>
-    <form name="shipment-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onsubmit="return submitLead(event)">
-      <input type="hidden" name="form-name" value="shipment-request">
-      <p class="hp-field"><label>Do not fill this in: <input name="bot-field"></label></p>
+    <form id="leadform" onsubmit="return submitLead(event)">
+      <p class="hp-field"><label>Do not fill this in: <input name="botcheck"></label></p>
       <div class="field-row">
         <div class="field"><label>Your name</label><input required name="name" placeholder="Full name"></div>
-        <div class="field"><label>Phone</label><input required name="phone" placeholder="0803 000 0000"></div>
+        <div class="field"><label>Phone</label><input required name="phone" placeholder="+234 803 000 0000"></div>
       </div>
       <div class="field"><label>Email <span style="color:#8492A6;font-weight:400">(optional)</span></label><input type="email" name="email" placeholder="you@example.com"></div>
       <div class="field-row">
@@ -69,7 +68,7 @@
       <div class="foot-col"><h5>Services</h5>
         <a href="services.html">Cargo transport</a><a href="services.html">Air &amp; sea freight</a><a href="services.html">Customs clearing</a><a href="services.html">Corporate logistics</a></div>
       <div class="foot-col"><h5>Contact</h5>
-        <span class="fi">0805 059 0665</span><span class="fi">0806 811 0696</span><span class="fi">ejb_net@yahoo.com</span><span class="fi">M.M.A. Lagos, Nigeria</span></div>
+        <span class="fi">+234 805 059 0665</span><span class="fi">+234 806 811 0696</span><span class="fi">seguntosin01@gmail.com</span><span class="fi">M.M.A. Lagos, Nigeria</span></div>
     </div>
     <div class="foot-bottom">
       <span>&copy; 2026 E.J.B Network Venture. All rights reserved.</span>
@@ -88,8 +87,18 @@ const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.t
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
 <script>
-/* Sends the form to Netlify Forms, then shows the in-place success card.
-   Netlify captures the submission at the site root; no backend needed. */
+/* ============================================================
+   FORM SETUP  (works on Vercel, Netlify, or any static host)
+
+   1. Go to web3forms.com and enter your email (seguntosin01@gmail.com).
+      They email you an Access Key instantly. No account needed.
+   2. Paste that key between the quotes below.
+   3. Deploy. Submissions arrive in that inbox.
+
+   Free plan: 250 submissions per month.
+   ============================================================ */
+var ACCESS_KEY = "3bdfe383-a2ab-435a-b4d2-d27b3a6fef20";
+
 function submitLead(e){
   e.preventDefault();
   var f=e.target;
@@ -97,25 +106,38 @@ function submitLead(e){
   var prev=btn.textContent;
   var old=f.querySelector('.form-error'); if(old) old.remove();
 
-  btn.textContent='Sending...'; btn.disabled=true;
-
-  var data=new FormData(f);
-  fetch('/',{
-    method:'POST',
-    headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body:new URLSearchParams(data).toString()
-  })
-  .then(function(res){
-    if(!res.ok) throw new Error('Submission failed');
-    f.innerHTML='<div style="text-align:center;padding:24px 0"><div style="width:58px;height:58px;border-radius:50%;background:#E7F5EC;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><h3 style="color:#061B33">Request received</h3><p style="color:#5A6880;margin-top:8px">Thank you. Our team will reach out shortly with a rate and next steps.</p></div>';
-  })
-  .catch(function(){
+  function fail(msg){
     var err=document.createElement('div');
     err.className='form-error';
-    err.innerHTML='Sorry, that did not send. Please call <strong>0805 059 0665</strong> or email <strong>ejb_net@yahoo.com</strong> and we will help right away.';
+    err.innerHTML = msg || 'Sorry, that did not send. Please call <strong>+234 805 059 0665</strong> or email <strong>seguntosin01@gmail.com</strong> and we will help right away.';
     f.insertBefore(err, f.firstChild);
     btn.textContent=prev; btn.disabled=false;
-  });
+  }
+
+  if(!ACCESS_KEY || ACCESS_KEY.indexOf('PASTE-YOUR') === 0){
+    fail('This form is not connected yet. Please call <strong>+234 805 059 0665</strong> or email <strong>seguntosin01@gmail.com</strong>.');
+    return false;
+  }
+
+  btn.textContent='Sending...'; btn.disabled=true;
+
+  var data=Object.fromEntries(new FormData(f));
+  data.access_key = ACCESS_KEY;
+  data.subject = 'New shipment request from the website';
+  data.from_name = 'E.J.B Network Venture website';
+
+  fetch('https://api.web3forms.com/submit',{
+    method:'POST',
+    headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+    body:JSON.stringify(data)
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(result){
+    if(!result.success) throw new Error('rejected');
+    f.innerHTML='<div style="text-align:center;padding:24px 0"><div style="width:58px;height:58px;border-radius:50%;background:#E7F5EC;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1D7A4C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><h3 style="color:#061B33">Request received</h3><p style="color:#5A6880;margin-top:8px">Thank you. Our team will reach out shortly with a rate and next steps.</p></div>';
+  })
+  .catch(function(){ fail(); });
+
   return false;
 }
 </script></body></html>
